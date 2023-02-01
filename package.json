@@ -1,0 +1,19 @@
+{
+  "name": "barcode-creater",
+  "version": "1.0.0",
+  "description": "Words",
+  "main": "app.js",
+  "scripts": {
+    "start": "nodemon app.js"
+  },
+  "author": "Matthew Gerdan",
+  "license": "ISC",
+  "dependencies": {
+    "code-128-encoder": "^3.1.1",
+    "html-pdf": "^3.0.1",
+    "xml2js": "^0.4.23"
+  },
+  "devDependencies": {
+    "lodash": "^4.17.21"
+  }
+}
