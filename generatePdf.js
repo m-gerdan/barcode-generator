@@ -1,25 +1,38 @@
 const fs = require('fs');
 const htmlPdf = require('html-pdf');
-
-const generatePdf = ( encodedValue, skuCode, filePath, fileName, toBeGenFileName)=>{
+/**
+ * Will create a file of the specified type in the destinationi location
+ * @param {htmlAsString} htmlContent 
+ * @param {String} typeOfFile [PDF,PNG,JPEG]
+ * @param {String} toBeGenFilePath 
+ * @param {String} toBeGenFileName 
+ * @returns {void}
+ */
+const generatePdf = ( htmlContent, typeOfFile, filePath, fileName)=>{
     try{
-        let htmlFilePath = `.${filePath}${fileName}`;
+        // console.log(filePath, fileName);
+        // let htmlFilePath = `.${filePath}${fileName}`;
 
-        if(!fs.existsSync(htmlFilePath)){
-            console.log('File Dont exist buddy');
+        // if(!fs.existsSync(htmlFilePath)){
+        //     console.log('File Dont exist buddy');
+        // }
+
+        if(!['PDF','PNG','JPEG'].includes(typeOfFile)){
+            fileName+='.pdf'
+        }else{
+            fileName+='.'+typeOfFile
         }
-        toBeGenFileName+='.pdf'
-        let htmlContent = fs.readFileSync(htmlFilePath,'utf-8');
-        htmlContent= htmlContent.replace('PLACEHOLDER',encodedValue);
-        htmlContent = htmlContent.replace('HUMANREADABLE',skuCode)
+        const productFilePath = `${filePath}${fileName}`
+
         const htmlToPdfOptions = {
-            type:'pdf',
+            type: typeOfFile,
             height:'3cm',
-            width: '10cm',
+            width: '7cm',
             renderDelay:2000,
         }
+
         htmlPdf.create(htmlContent, htmlToPdfOptions)
-        .toFile(toBeGenFileName,(err,result)=>{
+        .toFile(productFilePath,(err,result)=>{
             if(err){return console.log(err);}
             console.log(result);
         })
